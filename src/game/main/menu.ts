@@ -29,7 +29,10 @@ export default class Menu extends BaseObject{
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
-        renderer.domElement.addEventListener('pointerdown', this.onPointerDown.bind(this))
+        renderer.domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
+        container.addEventListener('contextmenu', function(e){
+            e.preventDefault();
+         });
     }
 
     private onPointerDown(event){

@@ -93,6 +93,10 @@ export default class Game extends THREE.EventDispatcher {
 
         this.animate();
 
+        this._container.addEventListener('contextmenu', function(e){
+            e.preventDefault();
+         });
+
         this.addEventListener("gameEvent", (event) => {
             if(event.value == 'dispose'){
                 this._scene.traverse((child)=>{
