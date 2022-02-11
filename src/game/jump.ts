@@ -133,16 +133,21 @@ export default class Game extends THREE.EventDispatcher {
     private control(){
         this._container.addEventListener('pointerdown', this.onPointerDown.bind(this));
         this._container.addEventListener('pointerup', this.onPointerUp.bind(this));
+        this._container.addEventListener('contextmenu', function(e){
+            e.preventDefault();
+         });
     }
 
-    private onPointerDown(){
+    private onPointerDown(e){
+        e.preventDefault();
         if(this._gameOver) return;
         //开始蓄力
         this._pointerDownFlag = true;
         this._offsetVal = 0;
     }
 
-    private onPointerUp(){
+    private onPointerUp(e){
+        e.preventDefault();
         if(this._gameOver) return;
         this._gameOver = true;
         this._pointerDownFlag = false;

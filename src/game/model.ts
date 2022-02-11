@@ -2,9 +2,11 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Helper from "./helper";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import Label3D from "./main/label3D";
 import { BufferGeometry } from "three";
+
 
 export default class Game extends THREE.EventDispatcher {
     constructor(container: Element) {
@@ -21,7 +23,7 @@ export default class Game extends THREE.EventDispatcher {
     private _helper;
     private _time = 0;
     private _animationID;
-    private _gltfLoader = new GLTFLoader();
+    private _gltfLoader;
     private _mixer;
 
     /**
@@ -79,7 +81,14 @@ export default class Game extends THREE.EventDispatcher {
         this._clock = clock;
         this._helper = helper;
 
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( 'three/examples/js/libs/draco/gltf/' );
+
+        this._gltfLoader = new GLTFLoader();
+        this._gltfLoader.setDRACOLoader( dracoLoader );
+
         this.loadModel('static/models/medieval_fantasy_book/scene.gltf');
+        // this.loadModel('static/models/LittlestTokyo.glb')
         this.addlight();
 
         this.animate();
