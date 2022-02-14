@@ -38,6 +38,7 @@ export default class Game extends THREE.EventDispatcher {
     private _composer;  //后处理混合器
     private _animationID;
     private _gltfLoader;
+    private _renderRate = 0;  //渲染频率
 
     /**
      * 初始化
@@ -278,9 +279,15 @@ export default class Game extends THREE.EventDispatcher {
 
     private update(delta) {
         this._time += delta;
-        this._composer.render();
-        // this._renderer.render(this._scene, this._camera);
+        //每两帧绘制一次
+        if(this._renderRate % 2 == 0){
+            this._composer.render();
+        }
+        
+        this._renderRate++;
         this._helper.update();
+        // this._renderer.render(this._scene, this._camera);
+        
         if(this._points){
             this._points.rotation.x += 0.003;
             this._points.rotation.y += 0.001;

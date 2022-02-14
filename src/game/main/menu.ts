@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { TextureLoader } from 'three';
 import BaseObject from './base';
 
 export default class Menu extends BaseObject{
@@ -22,7 +23,8 @@ export default class Menu extends BaseObject{
         const texture = this.initVideo();
         this.initCube(scene, [0, 0, 0], 'jump', texture);
         this.initPoints(scene, [-5, 0, 40], 'particles');
-        this.initCube(scene, [30, 0, 20], 'model');
+        const tex = new THREE.TextureLoader().load("static/textures/image.png")
+        this.initCube(scene, [30, 0, 20], 'model', tex);
     
         this.game = game;
         this.container = container;

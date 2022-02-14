@@ -28,6 +28,7 @@ export default class Game extends THREE.EventDispatcher {
     private _time = -10;
     private _menu;
     private _label3D;
+    private _renderRate = 0;
 
     /**
      * 初始化
@@ -148,23 +149,24 @@ export default class Game extends THREE.EventDispatcher {
 
     private update(delta) {
         this._time += delta;
-        this._renderer.render(this._scene, this._camera);
-        this._helper.update();
-
-        if(this._sky &&  this._ocean){
-            this._sky.updateSun(this._time * 0.1, 180 - this._time * 0.1);
-            let sunDirection = this._sky.sun.normalize()
-
-            //设置海洋的time
-            this._ocean.setUniforms({
-                time: this._time,
-                sunDirection
-            })
+        if(this._renderRate % 2 == 0){
+            this._renderer.render(this._scene, this._camera);
+            if(this._sky &&  this._ocean){
+                this._sky.updateSun(this._time * 0.1, 180 - this._time * 0.1);
+                let sunDirection = this._sky.sun.normalize()
     
-            this._scene.environment = this._sky.environment;
+                //设置海洋的time
+                this._ocean.setUniforms({
+                    time: this._time,
+                    sunDirection
+                })
+        
+                this._scene.environment = this._sky.environment;
+            }
         }
-
+        this._renderRate++;
         this._menu && this._menu.update(delta);
+        this._helper.update();
     }
 
     private animate() {

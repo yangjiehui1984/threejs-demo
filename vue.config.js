@@ -23,8 +23,9 @@ const sourcePrefetch = {
 
 module.exports = {
     // 基本路径
-    publicPath: "",
-    // publicPath: "../dist/",
+    // publicPath: "",
+    // build时的路径为../dist/
+    publicPath: isProduction ? "../dist/" : "",
     // 相对于打包路径index.html的路径
     indexPath: "index.html",
     // 文件输出目录

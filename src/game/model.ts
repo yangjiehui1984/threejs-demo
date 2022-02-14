@@ -25,6 +25,7 @@ export default class Game extends THREE.EventDispatcher {
     private _animationID;
     private _gltfLoader;
     private _mixer;
+    private _renderRate = 0;  //渲染频率
 
     /**
      * 初始化
@@ -90,6 +91,7 @@ export default class Game extends THREE.EventDispatcher {
         this.loadModel('static/models/medieval_fantasy_book/scene.gltf');
         // this.loadModel('static/models/LittlestTokyo.glb')
         this.addlight();
+        // this.addPointLight();
 
         this.animate();
 
@@ -118,6 +120,16 @@ export default class Game extends THREE.EventDispatcher {
     }
 
     /**
+     * 点光源
+     */
+    private addPointLight(){
+        const light = new THREE.PointLight( 0xffffff, 3, 100 );
+        light.position.set( 5, 5, 2 );
+        light.castShadow = true;
+        this._scene.add( light );
+    }
+
+    /**
      * 光照
      * @param path 
      */
@@ -126,14 +138,14 @@ export default class Game extends THREE.EventDispatcher {
         this._scene.add(light);
 
         //太阳
-        const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+        const directionalLight = new THREE.DirectionalLight( 0xffffff, 2 );
         directionalLight.castShadow = true;
-        // directionalLight.shadow.mapSize.width = 2048; // default
-        // directionalLight.shadow.mapSize.height = 2048; // default
-        // directionalLight.shadow.camera.top = 50;
-        // directionalLight.shadow.camera.bottom = -50;
-        // directionalLight.shadow.camera.left = -50;
-        // directionalLight.shadow.camera.right = 50;
+        directionalLight.shadow.mapSize.width = 4096; // default
+        directionalLight.shadow.mapSize.height = 4096; // default
+        directionalLight.shadow.camera.top = 10;
+        directionalLight.shadow.camera.bottom = -10;
+        directionalLight.shadow.camera.left = -10;
+        directionalLight.shadow.camera.right = 10;
         directionalLight.position.set(10, 10, 10);
         this._scene.add( directionalLight );
     }
@@ -146,10 +158,12 @@ export default class Game extends THREE.EventDispatcher {
         this._gltfLoader.load(path, (gltf) => {
             let model = gltf.scene;
             model.traverse((child) => {
-                // if (child.type.indexOf("Mesh") != -1) {
+                
+                if (child.type.indexOf("Mesh") != -1) {
+                    console.log(child)
                     child.castShadow = true;
                     child.receiveShadow = true;
-                // }
+                }
             });
             
             console.log('模型已加载')
@@ -164,7 +178,10 @@ export default class Game extends THREE.EventDispatcher {
 
     private update(delta) {
         this._time += delta;
-        this._renderer.render(this._scene, this._camera);
+        if(this._renderRate % 2 == 0){
+            this._renderer.render(this._scene, this._camera);
+        }
+        this._renderRate++;
         this._helper.update();
         this._mixer && this._mixer.update( delta );
     }

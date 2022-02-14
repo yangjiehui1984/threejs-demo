@@ -9,6 +9,7 @@
 import Game from "../game/main";
 export default {
     mounted() {
+        console.log('Game。。。。')
         const game = new Game(this.$refs["container"]);
         this.game = game;
         game.addEventListener("gameEvent", (event) => {

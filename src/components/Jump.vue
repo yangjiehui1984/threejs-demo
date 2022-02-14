@@ -1,6 +1,7 @@
 <template>
     <div>
         <div ref="container" class="container">
+            <div class="title">跳一跳</div>
             <div class="score">score:{{score}}</div>
             <div v-show="gameover" class="gameover">
                 <div class="title">GameOver!</div>
@@ -68,11 +69,28 @@ export default {
     font-size: 40px;
     font-weight: bold;
 }
+
+.title{
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    font-weight: 500;
+}
 .gameover{
     position: absolute;
     top: 20%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 100px;
+    font-size: 200px;
+    font-weight: 700;
+}
+
+.gameover button{
+    margin-top: 400px;
+    width: 80px;
+    height: 40px;
+    font-size: 20px;
 }
 </style>

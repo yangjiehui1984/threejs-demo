@@ -37,6 +37,7 @@ export default class Game extends THREE.EventDispatcher {
     private _objectList = [];
     private _gameOver = false;
     private _particles = [];
+    private _renderRate = 0;
     /**
      * 初始化
      */
@@ -180,7 +181,7 @@ export default class Game extends THREE.EventDispatcher {
 
     private addGround(){
         const geometry = new THREE.PlaneGeometry( 1000, 1000 );
-        const material = new THREE.MeshLambertMaterial( {color: 0xaaaaaa} );
+        const material = new THREE.MeshLambertMaterial( {color: 0x3333aa} );
         const plane = new THREE.Mesh( geometry, material );
         plane.rotateX(-Math.PI * 0.5);
         plane.receiveShadow = true;
@@ -457,7 +458,10 @@ export default class Game extends THREE.EventDispatcher {
     }
 
     private update(delta) {
-        this._renderer.render(this._scene, this._camera);
+        if(this._renderRate % 2 == 0){
+            this._renderer.render(this._scene, this._camera);
+        }
+        this._renderRate++;
         this._helper.update();
         TWEEN.update();
 
