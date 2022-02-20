@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import Game from "../game/test";
+import Game from "../game/main/";
 export default {
     mounted() {
         console.log('Game。。。。')

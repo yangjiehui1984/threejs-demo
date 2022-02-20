@@ -54,7 +54,7 @@ export default class Game extends THREE.EventDispatcher {
             0.1,
             1000
         );
-        camera.position.set(-10, 10, 10);
+        camera.position.set(-15, 15, 15);
         camera.lookAt(scene.position);
 
         //render
@@ -197,7 +197,7 @@ export default class Game extends THREE.EventDispatcher {
         this._role.position.set(0, 1.5, 0);
         this._role.rotation.set(0, 0, 0);
         this._curPos = new THREE.Vector3(0, 0.5, 0);
-        this._camera.position.set(-10, 10, 10);
+        this._camera.position.set(-15, 15, 15);
         this._light.position.set(200, 200, 200);
 
         //添加一个起点位置

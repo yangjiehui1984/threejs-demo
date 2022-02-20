@@ -64,9 +64,9 @@ export default {
 }
 .score{
     position: absolute;
-    top: 50px;
+    top: 100px;
     right: 50px;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -88,7 +88,7 @@ export default {
 }
 
 .gameover button{
-    margin-top: 400px;
+    margin-top: 40vh;
     width: 80px;
     height: 40px;
     font-size: 20px;
